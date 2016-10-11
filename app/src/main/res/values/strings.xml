@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QRFood</string>
+    <string name="auth0_client_id">x3YYrymMftpRRHb48Te8SMO9BQHq7M6p</string>
+    <string name="auth0_domain">qrfood.eu.auth0.com</string>
+</resources>
