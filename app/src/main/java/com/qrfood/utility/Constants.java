@@ -1,7 +1,7 @@
 package com.qrfood.utility;
 
 /**
- * Created by prera on 10/5/2016.
+ * Created by Prerak on 10/5/2016.
  */
 
 public class Constants {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by prera on 10/5/2016.
+ * Created by Prerak on 10/5/2016.
  */
 
 public class CommonMethods {
@@ -13,11 +13,6 @@ public class CommonMethods {
 
     public CommonMethods(Context context) {
         this.context = context;
-    }
-
-    public boolean isLoggedIn() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.sharedPreferencesId, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(Constants.loginFlagId, false);
     }
 
     public void setSharedPreferences(String key, Object value, String dataType) {
@@ -36,6 +31,12 @@ public class CommonMethods {
                 break;
         }
         editor.apply();
+    }
+
+    public void removeSharedPreference(String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.sharedPreferencesId, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key).apply();
     }
 
     public Object getSharedPreferences(String key, String dataType) {

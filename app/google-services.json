@@ -1,0 +1,66 @@
+{
+  "project_info": {
+    "project_number": "299826058525",
+    "firebase_url": "https://qrfood-ce843.firebaseio.com",
+    "project_id": "qrfood-ce843",
+    "storage_bucket": "qrfood-ce843.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299826058525:android:86f883cf95e04a6e",
+        "android_client_info": {
+          "package_name": "com.qrfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299826058525-thpetc87gj6jomahq2rs63vp0otpl1hg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qrfood",
+            "certificate_hash": "422956A7DD18C968548513049F03D66842645EE9"
+          }
+        },
+        {
+          "client_id": "299826058525-cpbpcudovkn0qoiv5rb1ob1getgtkp26.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "299826058525-qc3srven833cr0m9u07248b9pe2ngtsg.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "299826058525-h005lpsk10h9o4omv5spviu7dl5ual72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNxera2pFKOOwvuFy5-Lbo-v0-dN6Lum8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-44377543-3"
+          }
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299826058525-cpbpcudovkn0qoiv5rb1ob1getgtkp26.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
