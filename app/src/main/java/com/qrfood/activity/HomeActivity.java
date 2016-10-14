@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,21 +19,54 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.qrfood.R;
+import com.qrfood.fragment.PastOrdersFragment;
+import com.qrfood.fragment.ScanFragment;
+import com.qrfood.fragment.dummy.DummyContent;
 import com.qrfood.utility.CommonMethods;
 import com.qrfood.utility.Constants;
 import com.squareup.picasso.Picasso;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import static android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import static com.qrfood.fragment.RestaurantFragment.OnListFragmentInteractionListener;
 
+public class HomeActivity extends AppCompatActivity
+        implements OnNavigationItemSelectedListener, OnListFragmentInteractionListener {
+
+    private static final int RC_BARCODE_CAPTURE = 9001;
     private CommonMethods commonMethods;
+    private Bundle savedInstanceState = null;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_BARCODE_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra("Barcode");
+                    Log.i("HA", "scan success");
+                    Log.i("HA", barcode.displayValue);
+                } else {
+                    Log.i("HA", "scan fail");
+                    Log.d("HA", "No barcode captured, intent data is null");
+                }
+            } else {
+                Log.i("ha", String.format(getString(R.string.barcode_error),
+                        CommonStatusCodes.getStatusCodeString(resultCode)));
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_home);
         commonMethods = new CommonMethods(this);
 
@@ -62,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     private void renderView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,12 +112,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View headerLayout = navigationView.getHeaderView(0);
 
-        Log.i("HA", "Provider: " + FirebaseAuth.getInstance().getCurrentUser().getProviderId());
         TextView userFullName = (TextView) headerLayout.findViewById(R.id.userFullName);
         userFullName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         ImageView userImage = (ImageView) headerLayout.findViewById(R.id.userImage);
         Picasso.with(this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
+
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.main_content_frame, new ScanFragment()).commit();
+        }
     }
 
     private void signOut() {
@@ -104,23 +142,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
+            case R.id.nav_past_orders:
+                fragmentTransaction.replace(R.id.main_content_frame, new PastOrdersFragment());
+                fragmentTransaction.addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_slideshow) {
+                break;
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            case R.id.nav_scan:
+                fragmentTransaction.replace(R.id.main_content_frame, new ScanFragment());
+                fragmentTransaction.addToBackStack(null).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        Log.d("HA", "Selected Item: " + item.id);
     }
 }

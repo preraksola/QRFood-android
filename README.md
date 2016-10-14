@@ -1,2 +1,2 @@
 # QRFood-android
-Android application for QRFood aplication
+Android application for QRFood application

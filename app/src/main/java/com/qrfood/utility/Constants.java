@@ -6,8 +6,9 @@ package com.qrfood.utility;
 
 public class Constants {
     public static String sharedPreferencesId = "qrFoodSharedPreferences";
-    public static String loginFlagId = "loginFlag";
     public static String userTokenId = "userToken";
+    public static String barcodeRawId = "barcodeRawValue";
+
 
     public static String aString = "String";
     public static String aInteger = "Integer";

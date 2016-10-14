@@ -16,7 +16,7 @@ import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class MainActivity extends AppCompatActivity {
 
-    CommonMethods commonMethods;
+    private CommonMethods commonMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
